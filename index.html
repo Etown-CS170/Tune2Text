@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Transcriber</title>
+
+  <!-- Link to External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Nanum Gothic Coder Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coder&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Video Transcriber</h2>
+    <input type="url" id="videoUrl" placeholder="Paste YouTube URL" required />
+    <button onclick="transcribeVideo()">Transcribe</button>
+    <div id="transcription"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
