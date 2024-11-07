@@ -8,7 +8,7 @@ const YOUTUBE_API_KEY = 'AIzaSyB3Joz8OkmrO9oZ7LYgCPb_KdIwAWSrj6U';  // Replace w
 
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500'); // Allow only your frontend origin
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
