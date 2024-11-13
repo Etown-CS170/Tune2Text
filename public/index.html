@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Transcriber</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+  <h1>YouTube Video Transcriber</h1>
+  <input type="url" id="videoUrl" placeholder="Paste YouTube URL here" required />
+  <button onclick="transcribeVideo()">Transcribe</button>
+  <div id="transcription"></div>
+
+  <script>
+    async function transcribeVideo() {
+      const url = document.getElementById('videoUrl').value;
+      const transcriptionDiv = document.getElementById('transcription');
+
+      if (!url) {
+        transcriptionDiv.textContent = 'Please enter a YouTube URL.';
+        return;
+      }
+
+      transcriptionDiv.textContent = 'Transcribing... Please wait.';
+
+      try {
+        console.log('Sending request for URL:', url); // Debug log
+        const response = await fetch('http://localhost:3000/transcribe', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ url: url })
+        });
+
+        const data = await response.json();
+        console.log('Server response:', data); // Debug log
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${data.error || data.details || 'Unknown error'}`);
+        }
+
+        if (data.transcription) {
+          transcriptionDiv.textContent = data.transcription;
+        } else if (data.error) {
+          transcriptionDiv.textContent = `Error: ${data.error}`;
+        } else {
+          transcriptionDiv.textContent = 'Failed to transcribe the video.';
+        }
+      } catch (error) {
+        console.error('Full error:', error);
+        transcriptionDiv.textContent = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
