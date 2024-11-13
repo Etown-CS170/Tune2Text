@@ -49,9 +49,11 @@ app.post('/transcribe', async (req, res) => {
     }
 
     console.log('Transcript found, processing...');
-    const fullTranscription = transcripts
-      .map(item => item.text)
-      .join(' ');
+    const fullTranscription = transcripts.map(item => ({
+      text: item.text,
+      start: item.start,
+      duration: item.duration
+    }));
 
     console.log('Sending response');
     return res.json({ transcription: fullTranscription });
