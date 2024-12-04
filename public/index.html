@@ -1,3 +1,4 @@
+<!-- All of this was human coded -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title>YouTube Transcript App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -16,42 +18,5 @@
         </form>
         <div id="transcriptOutput"></div>
     </div>
-    <script>
-        document.getElementById('transcribeForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const url = document.getElementById('url').value;
-            const button = document.querySelector('button'); // Get the button element
-            const originalButtonText = button.innerText; // Store the original button text
-            button.innerText = 'Loading...'; // Change button text to "Loading..."
-
-            try {
-                const response = await fetch('/transcribe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url }),
-                });
-                const data = await response.json();
-
-                if (data.transcription) {
-                    const transcriptOutput = document.getElementById('transcriptOutput');
-                    transcriptOutput.innerHTML = ''; // Clear previous output
-                    data.transcription.forEach(item => {
-                        const segment = document.createElement('div');
-                        segment.innerText = `[${item.start.toFixed(2)}s] ${item.text}`;
-                        transcriptOutput.appendChild(segment);
-                    });
-                } else {
-                    document.getElementById('transcriptOutput').innerText = data.error;
-                }
-            } catch (error) {
-                console.error('Error fetching transcript:', error);
-                document.getElementById('transcriptOutput').innerText = 'Error fetching transcript.';
-            } finally {
-                button.innerText = originalButtonText; // Restore the original button text
-            }
-        });
-    </script>
 </body>
 </html>
