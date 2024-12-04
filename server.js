@@ -1,3 +1,4 @@
+// This was entirely coded by ChatGPT and Claude through Cursor.
 const express = require('express'); // Import Express framework
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
 const { exec } = require('child_process'); // Module to execute shell commands
